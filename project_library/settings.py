@@ -1,5 +1,7 @@
 import os
+from functools import partial
 from pathlib import Path
+import dj_database_url
 
 from decouple import config, Csv
 
@@ -18,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'library'
 ]
 
@@ -51,12 +54,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'project_library.wsgi.application'
 
+
+default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+
+parse_database = partial(dj_database_url.parse, conn_max_age=600)
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': config('DATABASE_URL', default=default_db_url, cast=parse_database)
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

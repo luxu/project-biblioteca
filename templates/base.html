@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Biblioteca Municipal</title>
+
+    {% block css %}
+        {% include 'includes/css.html' %}
+    {% endblock css %}
+
+</head>
+
+<body>
+
+<div class="wrapper">
+    {% block nav_sidebar %}
+        {% include 'includes/sidebar.html' %}
+    {% endblock nav_sidebar %}
+
+    {% block content_wrapper %}
+        <div class="content-wrapper">
+            {% block content_header %}
+                <section class="content-header">
+                    {% block no_heading %}
+                        <h1>
+                            {% block page_name %}{% endblock page_name %}
+                            <div class="header-actions">
+                                {% block page_actions %}{% endblock page_actions %}
+                            </div>
+                            {% block no_description %}
+                                <small>{% block page_description %}{% endblock %}</small>
+                            {% endblock no_description %}
+                        </h1>
+                        {% block breadcrumbs %}{% endblock breadcrumbs %}
+                    {% endblock no_heading %}
+                </section>
+            {% endblock content_header %}
+            {% block content_outer %}
+                <section class="content">
+
+                    {% block content_block_wrap %}
+                        <div class="jumbotron">
+                            <div class="container">
+                                {% block content %}{% endblock %}
+                            </div>
+                        </div>
+                    {% endblock %}
+                </section>
+            {% endblock %}
+
+        </div>
+    {% endblock content_wrapper %}
+
+    {% block nav_footer %}
+        {% include 'includes/footer.html' %}
+    {% endblock nav_footer %}
+
+</div>
+
+</body>
+
+{% block js %}
+    {% include 'includes/js.html' %}
+{% endblock js %}
+
+</html>
