@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <h3>Adicionar/Alterar Autor</h3>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+            {{ field.label }}
+            {% render_field field class="form-control" %}
+        {% endfor %}
+        <button class="btn btn-primary" value="Save">
+            <i class="fa fa-floppy-o"></i>
+            Salvar
+        </button>
+    </form>
+{% endblock content %}
