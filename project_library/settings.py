@@ -20,6 +20,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'corsheaders',
     'widget_tweaks',
     'library'
 ]
@@ -95,3 +98,14 @@ STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, "static"))
 # https://docs.djangoproject.com/en/2.2/topics/files/
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, "media"))
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.IsAuthenticated',
+    )
+}
