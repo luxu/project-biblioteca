@@ -3,6 +3,11 @@ from functools import partial
 from pathlib import Path
 import dj_database_url
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+
 from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -97,10 +102,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, "staticfiles"))
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+# https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
+
 # Stored files
 # https://docs.djangoproject.com/en/2.2/topics/files/
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, "media"))
+# MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, "media"))
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -114,3 +128,31 @@ REST_FRAMEWORK = {
 }
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+CLOUDINARY_URL = config('CLOUDINARY_URL', default=False)
+
+COLLECTFAST_ENABLED = False
+
+# Storage configuration in
+if not CLOUDINARY_URL:
+    CLOUDINARY_STORAGE = {    # pragma: no cover
+        'CLOUD_NAME': config('CLOUD_NAME'),
+        'API_KEY': config('API_KEY'),
+        'API_SECRET': config('API_SECRET')
+    }
+
+    cloudinary.config(
+        cloud_name=config('CLOUD_NAME'),
+        api_key=config('API_KEY'),
+        api_secret=config('API_SECRET'),
+    )
+
+    # static assets
+    STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'  # pragma: no cover
+    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'  # pragma: no cover
+
+    # Media assets
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  # pragma: no cover
+    COLLECTFAST_ENABLED = False
+    COLLECTFAST_DEBUG = True
+    COLLECTFAST_STRATEGY = 'collectfast.strategies.filesystem.FileSystemStrategy'
