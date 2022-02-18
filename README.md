@@ -1,4 +1,4 @@
-# Project Library
+# Projeto Biblioteca
 
 Exemplo de um projeto simples com Django.
 
@@ -19,3 +19,12 @@ pip install -r requirements.txt
 python contrib/env_gen.py
 python manage.py migrate
 ```
+
+## Consulta a API
+
+````
+import requests
+url = "https://project-biblioteca.herokuapp.com/api/books/"
+response = requests.get(url)
+response.json()
+````
