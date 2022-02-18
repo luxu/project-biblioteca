@@ -5,9 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Biblioteca Municipal</title>
+
+    <meta name="description" content="Página do curso Python Pro">
+    <meta name="Luciano Martins" content="LayoutIt!">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}"/>
+
+
     {% block css %}
-        {% include 'includes/css.html' %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/bootstrap-grid.css' %}" rel="stylesheet"/>
+{#        {% include 'includes/css.html' %}#}
     {% endblock css %}
+
 </head>
 
 <body>
