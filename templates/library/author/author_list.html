@@ -1,29 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Autores</h1>
-    <a href="{% url 'author_create' %}">Adicionar Autor</a>
-    <div class="box-body table-responsive">
-    <table class="table table-condensed">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th class="text-center">Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for author in object_list %}
+    <h3>Lista de autores</h3>
+    <a class="btn btn-primary" href="{% url 'author_create' %}">Adicionar Autor</a>
+    <div class="table-responsive">
+        <table class="table table-condensed">
+            <thead>
             <tr>
-                <td>{{ author.id }}</td>
-                <td>{{ author }}</td>
-                <td class="text-center">
-                    <a href="{% url 'author_edit' author.id %}">Editar</a>
-                    <a href="{% url 'author_delete' author.id %}">Excluir</a>
-                </td>
+                <th>ID</th>
+                <th>Nome</th>
+                <th class="text-center">Ações</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for author in object_list %}
+                <tr>
+                    <td>{{ author.id }}</td>
+                    <td>{{ author }}</td>
+                    <td class="text-center">
+                        <a href="{% url 'author_edit' author.id %}"
+                           class="btn btn-success">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="{% url 'author_delete' author.id %}"
+                           class="btn btn-danger">
+                            <i class="fa fa-close no"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock content %}
